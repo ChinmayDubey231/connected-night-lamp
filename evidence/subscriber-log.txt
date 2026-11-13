@@ -1,0 +1,16 @@
+tools/subscriber.py on a laptop, subscribed to chinmaydubey231/night-lamp/#
+on broker.hivemq.com, receiving from the Wokwi ESP32 (run 2 continuing).
+
+The Wokwi tab went into the background, which pauses the simulation, so
+the device stopped sending MQTT keep-alives. The broker then published its
+last-will "offline" (retained, seen on subscribe). When the tab came back,
+the device reconnected by itself, published "online", and readings
+resumed with consecutive sequence numbers.
+
+12:44:54  STATUS  offline  (retained)
+12:45:28  STATUS  online
+12:45:28  seq=67    level=680   lamp=0    [live]
+12:45:29  seq=68    level=680   lamp=0    [live]
+12:45:32  seq=69    level=680   lamp=0    [live]
+12:45:35  seq=70    level=680   lamp=0    [live]
+12:45:38  seq=71    level=680   lamp=0    [live]

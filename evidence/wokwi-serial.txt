@@ -1,0 +1,56 @@
+Wokwi ESP32, run 1: serial monitor (boot lines trimmed)
+Note: captured before the client-ID fix (commit 524d045), hence "000000".
+Shows a real MQTT reconnect: the first connect timed out (state=-4,
+MQTT_CONNECTION_TIMEOUT) and the backoff retry 1.24 s later succeeded,
+then the 2 readings queued meanwhile were sent.
+
+Connected night lamp, client id night-lamp-000000
+[wifi] connecting...
+[wifi] connected, IP 10.10.0.2
+[mqtt] connecting to broker.hivemq.com...
+[mqtt] failed, state=-4, retry in 1240 ms
+[mqtt] connecting to broker.hivemq.com...
+[mqtt] connected, 2 reading(s) waiting
+[mqtt] sent 2 buffered reading(s), 0 left
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=2 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=3 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=6 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=8 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=11 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=13 dropped=0
+
+
+Wokwi ESP32, run 2: serial monitor (boot lines trimmed)
+Steady publishing, 65 readings sent with nothing left in the buffer.
+
+Connected night lamp, client id night-lamp-000000
+[wifi] connecting...
+[wifi] connected, IP 10.10.0.2
+[mqtt] connecting to broker.hivemq.com...
+[mqtt] connected, 1 reading(s) waiting
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=2 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=5 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=7 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=10 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=12 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=15 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=17 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=20 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=22 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=25 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=27 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=30 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=32 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=35 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=37 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=40 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=42 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=45 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=47 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=50 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=52 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=55 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=57 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=60 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=62 dropped=0
+[stats] level=680 lamp=0 wifi=up mqtt=up buffered=0 published=65 dropped=0

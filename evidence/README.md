@@ -1,16 +1,18 @@
 # Evidence: data arriving
 
-Captured from a real run: the device running in the Wokwi simulator, publishing to `broker.hivemq.com`, and `tools/subscriber.py` receiving on another machine.
+Real runs: the device in the Wokwi ESP32 simulator, publishing over its WiFi to `broker.hivemq.com`, and `tools/subscriber.py` receiving on a laptop.
 
 | File | What it shows |
 |---|---|
-| `subscriber-log.txt` | Every message as it arrived. Live readings, the `offline`/`online` status changes, and the held-back readings arriving after the outage marked `[buffered, waited N s]`. Ends with a summary line showing `missing=0`. |
-| `readings.csv` | The same readings as a table: arrival time, `seq`, device time, `age`, level, lamp. |
-| `wokwi-serial.txt` | The device's own serial log for the same run: connection lost → buffering → reconnect → backlog sent. |
+| [`subscriber-log.txt`](subscriber-log.txt) | Readings arriving at a separate machine through the public broker, in order (`seq` 67→71). The device's last-will `offline` status, then `online` after it reconnected by itself. |
+| [`wokwi-serial.txt`](wokwi-serial.txt) | The device side. Run 1: the first MQTT connect timed out (`state=-4`), the backoff retry 1.24 s later succeeded, and the 2 readings queued meanwhile were sent. Run 2: 65 readings published with an empty buffer. |
 
-How the run was done:
+What these runs show for real:
 
-1. Start the device in Wokwi and run `python tools/subscriber.py`.
-2. Let it publish live readings for about 30 s.
-3. Press **drop network** in Wokwi and wait for it to recover (about 30 s).
-4. Let it run another 30 s, then press Ctrl+C in the subscriber to print the summary.
+- **Data published over WiFi/MQTT, arriving elsewhere:** both files.
+- **Reconnect logic:** two real reconnects. The MQTT connect timeout followed by a backoff retry (serial, run 1), and the recovery after the broker had already marked the device offline (subscriber log).
+- **Buffering:** run 1 queued 2 readings while MQTT was unavailable and sent them on connect.
+
+A long outage was not captured live with the *drop network* button. That case (buffering for 60 s, a connection drop while sending the backlog, buffer overflow, and in-order delivery with no gaps or duplicates) is covered by the host tests in [`../test`](../test). See the test output in the main README.
+
+The serial logs were captured before the client-ID fix, so they show `night-lamp-000000`. The current code uses the MAC address, or a random ID in the simulator.

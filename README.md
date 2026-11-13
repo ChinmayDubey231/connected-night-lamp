@@ -7,7 +7,7 @@ The night lamp from [Task 01](https://github.com/ChinmayDubey231/light-sensor-ni
 | Data published over WiFi / MQTT | One JSON reading every 2 s to `chinmaydubey231/night-lamp/readings` on `broker.hivemq.com`, via WiFi and [PubSubClient](https://github.com/knolleary/pubsubclient) |
 | Reconnect logic that works | WiFi and MQTT reconnect **separately**, each with exponential backoff (MQTT retries at 1, 2, 4, 8, 16, then 30 s, plus jitter). A broker outage does not restart WiFi. A last-will message marks the device `offline` if it disappears. |
 | Readings buffered while offline | 300-reading ring buffer (10 minutes). Sent oldest-first, and each reading is removed only after `publish()` succeeds. If the buffer fills, the oldest readings are dropped and counted, never silently lost. |
-| Evidence of data arriving | [`evidence/`](evidence/): subscriber log and CSV from a real run, including a simulated outage |
+| Evidence of data arriving | [`evidence/`](evidence/): real subscriber log and device serial logs, showing readings arriving through the public broker plus two real reconnects |
 
 ![Wiring diagram](wiring-diagram.png)
 
@@ -152,6 +152,6 @@ libraries.txt         Wokwi library list (PubSubClient)
 wiring-diagram.svg    wiring diagram (source)
 wiring-diagram.png    wiring diagram (image)
 tools/subscriber.py   subscriber that logs readings and checks for gaps
-evidence/             logs from a real run
+evidence/             subscriber and serial logs from real runs
 test/                 host-side tests with fake WiFi and MQTT
 ```
