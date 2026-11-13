@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" width="900" height="560" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+  <rect width="900" height="560" fill="#ffffff"/>
+
+  <text x="450" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">Connected night lamp: wiring diagram</text>
+  <text x="450" y="64" text-anchor="middle" font-size="14" fill="#555">ESP32 · LDR divider on GPIO 34 · lamp LED on GPIO 18 · "drop network" button on GPIO 4</text>
+
+  <!-- ESP32 block -->
+  <rect x="40" y="100" width="200" height="370" rx="10" fill="#2d3e50"/>
+  <text x="140" y="135" text-anchor="middle" font-size="20" font-weight="bold" fill="#fff">ESP32</text>
+  <text x="140" y="156" text-anchor="middle" font-size="12" fill="#c9d6e3">DevKit C · WiFi → MQTT</text>
+  <g font-size="15" font-weight="bold" fill="#fff" text-anchor="end">
+    <text x="226" y="205">3V3</text>
+    <text x="226" y="255">GPIO 34</text>
+    <text x="226" y="335">GND</text>
+    <text x="226" y="395">GPIO 18</text>
+    <text x="226" y="445">GPIO 4</text>
+  </g>
+  <g fill="#e8e8e8" stroke="#333" stroke-width="1">
+    <rect x="234" y="194" width="12" height="12"/>
+    <rect x="234" y="244" width="12" height="12"/>
+    <rect x="234" y="324" width="12" height="12"/>
+    <rect x="234" y="384" width="12" height="12"/>
+    <rect x="234" y="434" width="12" height="12"/>
+  </g>
+
+  <g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="246,200 460,200" stroke="#d62828"/>
+    <polyline points="460,200 460,208 472,213 448,221 472,229 448,237 460,242 460,250" stroke="#333" stroke-width="2.5"/>
+    <polyline points="246,250 460,250" stroke="#2a9d3f"/>
+    <polyline points="460,250 460,276" stroke="#333"/>
+    <polyline points="460,276 460,282 472,287 448,297 472,307 448,317 460,322 460,328" stroke="#333" stroke-width="2.5"/>
+    <polyline points="460,328 460,352" stroke="#111"/>
+    <polyline points="246,330 300,330 300,352" stroke="#111"/>
+
+    <!-- lamp -->
+    <polyline points="246,390 560,390" stroke="#f08c00"/>
+    <polyline points="560,390 566,390 571,378 581,402 591,378 601,402 611,378 616,390 622,390" stroke="#333" stroke-width="2.5"/>
+    <polyline points="622,390 680,390" stroke="#f08c00"/>
+    <polyline points="712,390 780,390 780,412" stroke="#111"/>
+
+    <!-- button -->
+    <polyline points="246,440 520,440" stroke="#1971c2"/>
+    <polyline points="580,440 640,440 640,462" stroke="#111"/>
+  </g>
+
+  <circle cx="460" cy="250" r="5" fill="#2a9d3f"/>
+  <circle cx="460" cy="302" r="30" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="392" y1="262" x2="424" y2="286" stroke="#333" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="384" y1="284" x2="420" y2="306" stroke="#333" stroke-width="2" marker-end="url(#arr)"/>
+
+  <polygon points="680,374 680,406 710,390" fill="#ffd43b" stroke="#333" stroke-width="2"/>
+  <line x1="712" y1="374" x2="712" y2="406" stroke="#333" stroke-width="3"/>
+  <line x1="690" y1="370" x2="704" y2="348" stroke="#333" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="704" y1="372" x2="718" y2="350" stroke="#333" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- push button symbol -->
+  <circle cx="522" cy="440" r="4" fill="#fff" stroke="#333" stroke-width="2"/>
+  <circle cx="578" cy="440" r="4" fill="#fff" stroke="#333" stroke-width="2"/>
+  <line x1="518" y1="424" x2="582" y2="424" stroke="#333" stroke-width="3"/>
+  <line x1="550" y1="424" x2="550" y2="414" stroke="#333" stroke-width="3"/>
+
+  <g stroke="#111" stroke-width="3" stroke-linecap="round">
+    <line x1="445" y1="352" x2="475" y2="352"/><line x1="451" y1="359" x2="469" y2="359"/><line x1="457" y1="366" x2="463" y2="366"/>
+    <line x1="285" y1="352" x2="315" y2="352"/><line x1="291" y1="359" x2="309" y2="359"/><line x1="297" y1="366" x2="303" y2="366"/>
+    <line x1="765" y1="412" x2="795" y2="412"/><line x1="771" y1="419" x2="789" y2="419"/><line x1="777" y1="426" x2="783" y2="426"/>
+    <line x1="625" y1="462" x2="655" y2="462"/><line x1="631" y1="469" x2="649" y2="469"/><line x1="637" y1="476" x2="643" y2="476"/>
+  </g>
+
+  <g font-size="14" fill="#222">
+    <text x="482" y="222" font-weight="bold">R1  10 kΩ</text>
+    <text x="500" y="298" font-weight="bold">LDR</text>
+    <text x="500" y="316" fill="#555">photoresistor</text>
+    <text x="300" y="240" fill="#2a9d3f">sensor (ADC1)</text>
+    <text x="566" y="364" font-weight="bold">R2  220 Ω</text>
+    <text x="736" y="372" font-weight="bold">lamp LED</text>
+    <text x="300" y="380" fill="#f08c00">PWM</text>
+    <text x="300" y="430" fill="#1971c2">input, internal pull-up</text>
+    <text x="500" y="482" font-weight="bold">"drop network"</text>
+    <text x="256" y="190" fill="#d62828">3.3V</text>
+    <text x="256" y="322" fill="#111">GND</text>
+  </g>
+
+  <line x1="40" y1="500" x2="860" y2="500" stroke="#ddd" stroke-width="1"/>
+  <text x="40" y="524" font-size="13" fill="#444">GPIO 34 is on ADC1: ADC2 pins cannot be read while WiFi is running. The button simulates the access point failing for 20 s.</text>
+  <text x="40" y="544" font-size="13" fill="#444">In Wokwi, the photoresistor module contains R1 + LDR: wire VCC → 3V3, GND → GND, AO → GPIO 34.</text>
+</svg>
