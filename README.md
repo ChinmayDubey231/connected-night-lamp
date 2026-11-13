@@ -106,6 +106,7 @@ python tools/subscriber.py --self-test
 
 ```
 Connected night lamp (sketch.ino)
+  ok   client id taken from the MAC (night-lamp-123456), not zeros
   ok   connects to WiFi and the MQTT broker
   ok   last will set: "offline" on status topic, retained
   ok   publishes retained "online" after connecting

@@ -315,15 +315,17 @@ void setup() {
   sampleSum = (long)first * AVG_SAMPLES;
   level = first;
 
+  // WiFi must be started before reading the MAC, otherwise it reads as
+  // all zeros.
+  WiFi.mode(WIFI_STA);
+  WiFi.setAutoReconnect(false);   // reconnects are handled by manageWifi()
+
   // Unique client ID from the MAC: two clients with the same ID on a
   // public broker keep kicking each other off.
   uint8_t mac[6];
   WiFi.macAddress(mac);
   snprintf(clientId, sizeof(clientId), "night-lamp-%02x%02x%02x", mac[3], mac[4], mac[5]);
   randomSeed(mac[5] ^ micros());
-
-  WiFi.mode(WIFI_STA);
-  WiFi.setAutoReconnect(false);   // reconnects are handled by manageWifi()
   mqtt.setServer(MQTT_HOST, MQTT_PORT);
   mqtt.setKeepAlive(15);
   mqtt.setSocketTimeout(3);

@@ -75,6 +75,7 @@ int main() {
   // ---- 1. Normal start-up ------------------------------------------------
   run_for(30000);
   auto r = readings();
+  CHECK(std::strcmp(clientId, "night-lamp-123456") == 0, "client id taken from the MAC (%s), not zeros", clientId);
   CHECK(wifiWasConnected && mqtt.connected(), "connects to WiFi and the MQTT broker");
   CHECK(mqtt.willTopic == TOPIC_STATUS && mqtt.willMessage == "offline" && mqtt.willRetain,
         "last will set: \"offline\" on status topic, retained");

@@ -31,9 +31,14 @@ struct FakeWiFi {
     st = WL_IDLE_STATUS;
   }
   void disconnect() { st = WL_IDLE_STATUS; joining = false; }
-  void mode(int) {}
+  bool radioOn = false;
+  void mode(int) { radioOn = true; }
   void setAutoReconnect(bool) {}
-  void macAddress(uint8_t* m) { const uint8_t mac[6] = {0x24, 0x0a, 0xc4, 0x12, 0x34, 0x56}; for (int i = 0; i < 6; i++) m[i] = mac[i]; }
+  // Like the real ESP32: the MAC reads as zeros until WiFi is started.
+  void macAddress(uint8_t* m) {
+    const uint8_t mac[6] = {0x24, 0x0a, 0xc4, 0x12, 0x34, 0x56};
+    for (int i = 0; i < 6; i++) m[i] = radioOn ? mac[i] : 0;
+  }
   const char* localIP() { return "10.13.37.2"; }
 };
 extern FakeWiFi WiFi;
