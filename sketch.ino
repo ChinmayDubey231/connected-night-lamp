@@ -20,6 +20,9 @@
 
 #include <WiFi.h>
 #include <PubSubClient.h>
+#if __has_include(<esp_random.h>)
+#include <esp_random.h>   // esp_random() moved here in ESP-IDF 5 (Arduino-ESP32 3.x)
+#endif
 
 // ---- Network settings -------------------------------------------------------
 const char* WIFI_SSID     = "Wokwi-GUEST";   // Wokwi's simulated access point
