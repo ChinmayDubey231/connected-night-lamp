@@ -32,12 +32,13 @@ struct FakeWiFi {
   }
   void disconnect() { st = WL_IDLE_STATUS; joining = false; }
   bool radioOn = false;
+  bool noFactoryMac = false;          // true = behave like the Wokwi simulator
   void mode(int) { radioOn = true; }
   void setAutoReconnect(bool) {}
   // Like the real ESP32: the MAC reads as zeros until WiFi is started.
   void macAddress(uint8_t* m) {
     const uint8_t mac[6] = {0x24, 0x0a, 0xc4, 0x12, 0x34, 0x56};
-    for (int i = 0; i < 6; i++) m[i] = radioOn ? mac[i] : 0;
+    for (int i = 0; i < 6; i++) m[i] = (radioOn && !noFactoryMac) ? mac[i] : 0;
   }
   const char* localIP() { return "10.13.37.2"; }
 };

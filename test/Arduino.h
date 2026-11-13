@@ -29,6 +29,7 @@ inline int digitalRead(uint8_t) { return fake_button; }
 inline void pinMode(uint8_t, uint8_t) {}
 inline long random(long lo, long hi) { return hi <= lo ? lo : lo + std::rand() % (hi - lo); }
 inline void randomSeed(unsigned long) { std::srand(42); }   // deterministic tests
+inline uint32_t esp_random() { return 0x00abcdefu; }
 
 struct FakeSerial {
   bool echo = false;

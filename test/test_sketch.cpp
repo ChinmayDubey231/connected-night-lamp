@@ -76,6 +76,16 @@ int main() {
   run_for(30000);
   auto r = readings();
   CHECK(std::strcmp(clientId, "night-lamp-123456") == 0, "client id taken from the MAC (%s), not zeros", clientId);
+  {
+    char real[24];
+    std::strcpy(real, clientId);
+    WiFi.noFactoryMac = true;          // simulator case: MAC reads 00:00:00:00:00:00
+    makeClientId();
+    CHECK(std::strcmp(clientId, "night-lamp-000000") != 0,
+          "no factory MAC (simulator): random id instead (%s)", clientId);
+    WiFi.noFactoryMac = false;
+    std::strcpy(clientId, real);
+  }
   CHECK(wifiWasConnected && mqtt.connected(), "connects to WiFi and the MQTT broker");
   CHECK(mqtt.willTopic == TOPIC_STATUS && mqtt.willMessage == "offline" && mqtt.willRetain,
         "last will set: \"offline\" on status topic, retained");

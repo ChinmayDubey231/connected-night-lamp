@@ -89,7 +89,7 @@ loop()   (never waits, except the MQTT connect noted below)
 - **When full, drop the oldest.** 300 readings is 10 minutes of history in about 3.6 KB of RAM. In a longer outage, the newest data is the most useful to keep, and the `dropped` field plus the `seq` gap show exactly how much was lost.
 - **Separate WiFi and MQTT reconnects.** A broker outage shouldn't restart a working WiFi link, and MQTT shouldn't be tried with no WiFi. ESP32's built-in WiFi auto-reconnect is turned off so the behaviour is explicit and testable.
 - **Exponential backoff with jitter.** Retrying quickly at first recovers fast from blips. Doubling up to a 30 s cap avoids hammering a network or broker that is really down. Up to 25% random jitter stops many devices that lost the same network from all retrying at the same moment.
-- **Unique client ID from the MAC address** (`night-lamp-123456`). On a public broker, two clients with the same ID keep disconnecting each other.
+- **Unique client ID from the MAC address** (`night-lamp-123456`). On a public broker, two clients with the same ID keep disconnecting each other. The Wokwi simulator has no factory MAC (it reads as all zeros), so in that case the ID comes from the ESP32's hardware random number generator instead.
 - **Last will + retained status.** Subscribers can tell "device offline" apart from "device online but quiet".
 - **Sensor on GPIO 34.** It is on ADC1. The ESP32's ADC2 pins cannot be read while WiFi is active.
 - **Known trade-off: `mqtt.connect()` blocks.** PubSubClient's connect waits for the TCP handshake, capped at a few seconds by the socket timeout. During that time the lamp isn't updated. The timers skip ahead instead of bursting afterwards, and readings keep their real timestamps. Removing this pause would mean running the network code in its own FreeRTOS task, which is more than this task needs.
@@ -107,6 +107,7 @@ python tools/subscriber.py --self-test
 ```
 Connected night lamp (sketch.ino)
   ok   client id taken from the MAC (night-lamp-123456), not zeros
+  ok   no factory MAC (simulator): random id instead (night-lamp-abcdef)
   ok   connects to WiFi and the MQTT broker
   ok   last will set: "offline" on status topic, retained
   ok   publishes retained "online" after connecting

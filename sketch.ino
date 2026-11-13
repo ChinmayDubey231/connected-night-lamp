@@ -305,6 +305,18 @@ void printStats() {
   Serial.println(droppedReadings);
 }
 
+// Unique client ID: two clients with the same ID on a public broker keep
+// kicking each other off. Use the last 3 bytes of the MAC; if the MAC
+// reads as all zeros (the Wokwi simulator has no factory MAC), fall back
+// to the ESP32's hardware random number generator.
+void makeClientId() {
+  uint8_t mac[6];
+  WiFi.macAddress(mac);
+  uint32_t suffix = ((uint32_t)mac[3] << 16) | ((uint32_t)mac[4] << 8) | mac[5];
+  if (suffix == 0) suffix = (esp_random() & 0xFFFFFF) | 1;
+  snprintf(clientId, sizeof(clientId), "night-lamp-%06lx", (unsigned long)suffix);
+}
+
 void setup() {
   Serial.begin(115200);
   pinMode(LAMP_PIN, OUTPUT);
@@ -320,12 +332,8 @@ void setup() {
   WiFi.mode(WIFI_STA);
   WiFi.setAutoReconnect(false);   // reconnects are handled by manageWifi()
 
-  // Unique client ID from the MAC: two clients with the same ID on a
-  // public broker keep kicking each other off.
-  uint8_t mac[6];
-  WiFi.macAddress(mac);
-  snprintf(clientId, sizeof(clientId), "night-lamp-%02x%02x%02x", mac[3], mac[4], mac[5]);
-  randomSeed(mac[5] ^ micros());
+  makeClientId();
+  randomSeed(esp_random());
   mqtt.setServer(MQTT_HOST, MQTT_PORT);
   mqtt.setKeepAlive(15);
   mqtt.setSocketTimeout(3);
